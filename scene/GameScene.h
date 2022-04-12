@@ -46,7 +46,7 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
-	DebugText* debugText_ = nullptr;
+	DebugText* debugText_= nullptr;
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
