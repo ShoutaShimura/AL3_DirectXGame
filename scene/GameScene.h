@@ -46,7 +46,7 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
-	DebugText* debugText_= nullptr;
+	DebugText* debugText_ = nullptr;
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
@@ -57,7 +57,9 @@ private: // メンバ変数
 	//3Dモデル
 	Model* model_ = nullptr;
 
-	WorldTransform worldTransform_;
+	//ワールドトランスフォーム
+	WorldTransform worldTransform_[100];
+
 
 	ViewProjection viewProjection_;
 

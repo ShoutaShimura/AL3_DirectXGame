@@ -11,6 +11,7 @@ GameScene::~GameScene() {
 	delete model_;
 }
 
+
 void GameScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
@@ -25,41 +26,44 @@ void GameScene::Initialize() {
 	sprite_ = Sprite::Create(textureHandle_, { 100,50 });
 	model_ = Model::Create();
 
-	//スケーリングを設定
-	worldTransform_.scale_= { 5.0f,5.0f,5.0f };
 
-	//X,Y,Z軸周りの回転角を設定
-	worldTransform_.rotation_ = {XM_PI/4.0f,XM_PI/4.0f,0.0f };
+	for (size_t i = 0; i < _countof(worldTransform_); i++) {
 
-	//X,Y,Z軸周りの平行移動を設定
-	worldTransform_.translation_ = { 10.0f,10.0f,10.0f };
+		//スケーリングを設定
+		worldTransform_[i].scale_ = { 10.0f,10.0f,10.0f };
+
+		////X,Y,Z軸周りの回転角を設定
+		//worldTransform_[i].rotation_ = { 0,0,0 };
+
+		//オブジェクトを置き始めるX座標を100と仮定
+		int viewMax = 100;
 
 
-	//ワールドトランスフォームの初期化
-	worldTransform_.Initialize();
+		if (i < 50) {
+			//X,Y,Z軸周りの平行移動を設定
+			worldTransform_[i].translation_ = { (float)viewMax - (i * 20.0f),40.0f,50.0f };
+		}
+		else if (i >= 50) {
+			worldTransform_[i].translation_ = { (float)viewMax - ((i - 50.0f) * 20.0f),-40.0f,50.0f };
+		}
+
+		//ワールドトランスフォームの初期化
+		worldTransform_[i].Initialize();
+	}
 
 	viewProjection_.Initialize();
 
 
-	//サウンドデータの読み込み
-	soundDataHandle_ = audio_->LoadWave("se_sad03.wav");
+	////サウンドデータの読み込み
+	//soundDataHandle_ = audio_->LoadWave("se_sad03.wav");
 
-	//音声再生
-	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+	////音声再生
+	//voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
 }
 
 void GameScene::Update() {
 
-	
 
-	debugText_->SetPos(50, 70);
-	debugText_->Printf("translation:(%f,%f,%f)", worldTransform_.translation_.x, worldTransform_.translation_.y, worldTransform_.translation_.z);
-	
-	debugText_->SetPos(50, 90);
-	debugText_->Printf("rotation:(%f,%f,%f)", worldTransform_.rotation_.x, worldTransform_.rotation_.y, worldTransform_.rotation_.z);
-
-	debugText_->SetPos(50, 110);
-	debugText_->Printf("scale:(%f,%f,%f)", worldTransform_.scale_.x, worldTransform_.scale_.y, worldTransform_.scale_.z);
 
 
 
@@ -78,7 +82,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
-	
+
 
 	// スプライト描画後処理
 	Sprite::PostDraw();
@@ -93,7 +97,10 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+
+	for (size_t i = 0; i < _countof(worldTransform_); i++) {
+		model_->Draw(worldTransform_[i], viewProjection_, textureHandle_);
+	}
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
