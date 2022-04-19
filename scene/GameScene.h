@@ -57,7 +57,9 @@ private: // メンバ変数
 	//3Dモデル
 	Model* model_ = nullptr;
 
-	WorldTransform worldTransform_;
+	//ワールドトランスフォーム
+	WorldTransform worldTransform_[100];
+
 
 	ViewProjection viewProjection_;
 
