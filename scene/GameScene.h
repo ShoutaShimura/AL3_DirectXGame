@@ -46,7 +46,7 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
-	DebugText* debugText_= nullptr;
+	DebugText* debugText_ = nullptr;
 
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
@@ -57,7 +57,8 @@ private: // メンバ変数
 	//3Dモデル
 	Model* model_ = nullptr;
 
-	WorldTransform worldTransform_;
+	//ワールドトランスフォーム
+	WorldTransform worldTransform_[100];
 
 	ViewProjection viewProjection_;
 
@@ -69,6 +70,9 @@ private: // メンバ変数
 
 	//値を表示したい変数
 	int32_t value_ = 0;
+
+	//カメラ上方向の角度
+	float viewAngle = 0.0f;
 
 	/// <summary>
 	/// ゲームシーン用
