@@ -48,6 +48,7 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
 
+
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 

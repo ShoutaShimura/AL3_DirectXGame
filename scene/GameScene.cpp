@@ -86,6 +86,7 @@ void GameScene::Update() {
 			move = { 0,0,-kEyeSpeed };
 		}
 
+
 		//視点移動(ベクトルの加算)
 		viewProjection_.eye.x += move.x;
 		viewProjection_.eye.y += move.y;
