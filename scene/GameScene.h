@@ -58,7 +58,7 @@ private: // メンバ変数
 	Model* model_ = nullptr;
 
 	//ワールドトランスフォーム
-	WorldTransform worldTransform_[9][9][9];
+	WorldTransform worldTransform_[10];
 
 
 	ViewProjection viewProjection_;
@@ -71,6 +71,10 @@ private: // メンバ変数
 
 	//値を表示したい変数
 	int32_t value_ = 0;
+
+	double angle[10];
+	float x = 0;
+	float y = 0;
 
 	/// <summary>
 	/// ゲームシーン用

@@ -27,24 +27,32 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 
 
+
 	for (size_t i = 0; i < _countof(worldTransform_); i++) {
 
-		for (size_t j = 0; j < _countof(worldTransform_); j++) {
-			for (size_t k = 0; k < _countof(worldTransform_); k++) {
-				//スケーリングを設定
-				worldTransform_[i][j][k].scale_ = { 1.0f,1.0f,1.0f };
+		//スケーリングを設定
+		worldTransform_[i].scale_ = { 1.0f,1.0f,1.0f };
 
-				////X,Y,Z軸周りの回転角を設定
-				//worldTransform_[i][j].rotation_ = { 0,0,0 };
+		////X,Y,Z軸周りの回転角を設定
+		//worldTransform_[i].rotation_ = { 0,0,0 };
+
+		//半径
+		int h = 10;
+
+		angle[i] = 36 * i;
+
+		x = h * cos((angle[i]) * 3.1415f / 180) - sin((angle [i]) * 3.1415f / 180);
+
+		y = h * sin((angle[i]) * 3.1415f / 180) + cos((angle[i]) * 3.1415f / 180);
+
+		//X,Y,Z軸周りの平行移動を設定
+		worldTransform_[i].translation_ = { x,y ,0 };
 
 
-				//X,Y,Z軸周りの平行移動を設定
-				worldTransform_[i][j][k].translation_ = { 16 - (i * 4.0f) ,16 - (j * 4.0f),k * 5.0f };
 
-				//ワールドトランスフォームの初期化
-				worldTransform_[i][j][k].Initialize();
-			}
-		}
+		//ワールドトランスフォームの初期化
+		worldTransform_[i].Initialize();
+
 	}
 	viewProjection_.Initialize();
 
@@ -58,9 +66,17 @@ void GameScene::Initialize() {
 
 void GameScene::Update() {
 
+	for (size_t i = 0; i < _countof(worldTransform_); i++) {
 
+		angle[i]++;
+		int h = 10;
 
+		worldTransform_[i].translation_.x = h * cos((angle[i]) * 3.1415f / 180) - sin((angle[i]) * 3.1415f / 180);
+		worldTransform_[i].translation_.y = h * sin((angle[i]) * 3.1415f / 180) + cos((angle[i]) * 3.1415f / 180);
 
+		worldTransform_[i].UpdateMatrix();
+
+	}
 
 }
 
@@ -94,13 +110,7 @@ void GameScene::Draw() {
 	/// </summary>
 
 	for (size_t i = 0; i < _countof(worldTransform_); i++) {
-		for (size_t j = 0; j < _countof(worldTransform_); j++) {
-			for (size_t k = 0; k < _countof(worldTransform_); k++) {
-
-				model_->Draw(worldTransform_[i][j][k], viewProjection_, textureHandle_);
-
-			}
-		}
+		model_->Draw(worldTransform_[i], viewProjection_, textureHandle_);
 	}
 
 	// 3Dオブジェクト描画後処理
